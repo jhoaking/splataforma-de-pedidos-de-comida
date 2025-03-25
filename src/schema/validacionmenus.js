@@ -5,7 +5,7 @@ const menuEsquema = z.object({
     descripcion : z.string().min(3),
     precio: z.number().positive(),
     tipo_id : z.number().positive().int(),  
-    restaurante_id : z.uuid()
+    restaurante_id : z.string().uuid()
 })
 
 export const validarMenu = (input) =>{

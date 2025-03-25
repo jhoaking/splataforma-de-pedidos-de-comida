@@ -6,10 +6,11 @@ export class restauranteController {
         this.restauranteModel = restauranteModel;
     }
 
-
+ 
     getRestaurante = async (req,res) =>{
         try {
             const result = await this.restauranteModel.obtenerRestaurante();
+
             res.status(200).json(result);
         } catch (error) {
             res.status(500).json({message : 'error al obtener los datos del restaurante', error: error.message});

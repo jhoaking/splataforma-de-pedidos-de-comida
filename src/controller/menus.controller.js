@@ -13,44 +13,52 @@ export class menuController {
                 res.status(400).json({error: JSON.parse(vali.error.message)});
             }
 
-            const result = this.menuModel.agregarMenu(vali.data);
-            res.status(200).json({message : 'se creo el menu',result});
+            const result = await this.menuModel.agregarMenu(vali.data);
+            res.status(200).json({message :'se creo el menu',result});
         } catch (error) {
             res.status(500).json({message : 'error al crear los datos del restaurante', error: error.message});
         }
     }
 
-    getDesayuno = async (req,res) =>{
-            const {desayuno} = req.query;
-        try {
-            const result  = await this.menuModel.obtenerDesayuno(desayuno);
+    getMenus = async (req, res) => {
+        const { tipo } = req.query; 
 
+        if (!tipo) {
+            return res.status(400).json({ message: "Debes proporcionar un tipo de menú." });
+        }
+
+        try {
+            const result = await this.menuModel.obtenerMenusPorTipo(tipo);
             res.status(200).json(result);
         } catch (error) {
-            res.status(500).json({message : 'error al obtener los desayunos del menu', error: error.message});
+            res.status(500).json({ message: `Error al obtener el menú de ${tipo}`, error: error.message });
         }
     }
 
-    getAlmuerzo = async (req,res) =>{
-            const {almuerzo} = req.query;
+    deleteMenu = async (req,res) =>{
+        const {id} = req.params;
         try {
-            const result  = await this.menuModel.obtenerAlumerzo(almuerzo);
+            const result = await this.menuModel.eliminarMenu(id);
 
-            res.status(200).json(result);
+            res.status(200).json({message: 'se elimino el platillo',result});
         } catch (error) {
-            res.status(500).json({message : 'error al obtener los desayunos del menu', error: error.message});
+            res.status(500).json({message : 'error al eliminar el menu', error: error.message});
         }
     }
 
-    getCena = async (req,res) =>{
-        const {cena} = req.query;
+    putMenu = async (req,res) =>{
+        const {id} = req.params
         try {
-        const result  = await this.menuModel.obtenerCena(cena);
+            const vali = validarMenu(req.body);
 
-        res.status(200).json(result);
+            if(!vali.success){
+                res.status(400).json({error: JSON.parse(vali.error.message)});
+            }
+
+            const result = await this.menuModel.aztualizarMenu(vali.data , id);
+            res.status(200).json({message : 'se actualizo el menu',result})
         } catch (error) {
-            res.status(500).json({message : 'error al obtener los desayunos del menu', error: error.message});
+            res.status(500).json({message : 'error al actualizar los datos del menu', error: error.message});
         }
     }
-    
 }
