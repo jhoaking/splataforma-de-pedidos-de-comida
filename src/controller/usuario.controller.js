@@ -39,7 +39,7 @@ export class controllerUser{
             )
 
             res
-            .cookie('acces_token',token, {
+            .cookie('access_token',token, {
                 httpOnly: true, 
                 sameSite : 'strict', 
                 secure : process.env.NODE_ENV === 'production',
@@ -50,6 +50,30 @@ export class controllerUser{
                 res.status(500).json({message : 'error al logear usuarios', error: error.message});
             }
         }
+
+        protected = async (req,res) =>{
+            try {
+                if(!req.user){
+                    return res.status(401).json({ message: "Acceso denegado" });
+                }
+
+                res.status(200).json({
+                    message: "Ruta protegida accedida con éxito",
+                    user: req.user
+                });
+            } catch (error) {
+                console.error('error en la ruta protegida');
+                
+            }
+        }
+
+        logout = async (req,res) =>{
+            res
+            .clearCookie('access_token')
+            .send('sesion cerrada')
+
+        }
+        
     updateUser = async (req,res) =>{
         const {id} = req.params;
         try {

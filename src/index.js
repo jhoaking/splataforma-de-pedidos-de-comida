@@ -9,9 +9,11 @@ import { crearUser } from './routes/usuarios.routes.js';
 
 import { restauranteModel } from './model/restaurantes.model.js';
 import { crearRestaurantes } from './routes/restaurantes.routes.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/restaurante',crearRestaurantes({restauranteModel}));
 app.use('/user',crearUser({usuariosModel}));
