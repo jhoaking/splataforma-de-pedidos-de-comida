@@ -33,7 +33,7 @@ export class controllerUser{
             const user = await this.usuariosModel.login(vali.data);
 
             const token = jwt.sign(
-                {nombre: user.nombre, email: user.email},
+                {nombre: user.nombre, email: user.email,rol: user.rol_id},
                 SECRET_JWT_KEY,
                 {expiresIn : '48h'}
             )

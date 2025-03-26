@@ -1,5 +1,6 @@
 import express from 'express';
 import { PORT } from './config.js';
+import cookieParser from 'cookie-parser';
 
 import { menuModel } from './model/menus.modl.js';
 import { crearMenu } from './routes/menus.routes.js';
@@ -9,7 +10,6 @@ import { crearUser } from './routes/usuarios.routes.js';
 
 import { restauranteModel } from './model/restaurantes.model.js';
 import { crearRestaurantes } from './routes/restaurantes.routes.js';
-import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(express.json());
