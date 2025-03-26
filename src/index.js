@@ -5,6 +5,9 @@ import cookieParser from 'cookie-parser';
 import { menuModel } from './model/menus.modl.js';
 import { crearMenu } from './routes/menus.routes.js';
 
+import { pedidoModel } from './model/pedidos.model.js';
+import { crearPedido } from './routes/pedidos.routes.js';
+
 import { usuariosModel } from './model/usuario.model.js';
 import { crearUser } from './routes/usuarios.routes.js';
 
@@ -18,6 +21,7 @@ app.use(cookieParser());
 app.use('/restaurante',crearRestaurantes({restauranteModel}));
 app.use('/user',crearUser({usuariosModel}));
 app.use('/menu',crearMenu({menuModel}))
+app.use('/pedido',crearPedido({pedidoModel}))
 
 
 app.listen(PORT, () =>{

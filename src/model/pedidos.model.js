@@ -41,7 +41,7 @@ export class pedidoModel{
         }
     }
 
-    static actuaizarPedido = async ({estado_id,fecha_pedido},id) =>{
+    static actualizarPedido = async ({estado_id,fecha_pedido},id) =>{
         try {
             const [rows] = await connection.query
             ('UPDATE pedidos SET estado_id = ? , fecha_pedido = ? WHERE pedido_id = UUID_TO_BIN(?)',[estado_id,fecha_pedido]);
