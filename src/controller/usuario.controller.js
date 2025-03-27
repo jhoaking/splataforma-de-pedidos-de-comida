@@ -31,9 +31,6 @@ export class controllerUser{
             }
             
             const user = await this.usuariosModel.login(vali.data);
-
-            console.log("Rol del usuario antes de generar token:", user.rol_id);
-
             const token = jwt.sign(
                 {id:user.user_id,nombre: user.nombre, email: user.email,rol: user.rol_id},
                 SECRET_JWT_KEY,

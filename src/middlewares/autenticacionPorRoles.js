@@ -16,17 +16,4 @@ export const validarRoles = (rolesPermitidos) => {
 
 
 
-export const verificarPedido = async (req,res,next) =>{
-    const {pedido_id}  = req.body;
-
-    const [pedido] = await connection.query('SELECT * FROM pedidos WHERE pedido_id = UUID_TO_BIN(?)',pedido_id);
-
-    if(!pedido){
-        res.json({ message:'no hiciste un pedido'});
-    }
-
-    if(pedido.estado_id === 1 || pedido.estado_id === 3 ){
-        return res.status(403).json({ message: 'No puedes modificar un pedido confirmado o entregado' });
-    }
-    next();
-}
+ 

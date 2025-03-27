@@ -36,7 +36,6 @@ export class usuariosModel {
         }
     }
 
-
     static login = async ({email,password}) =>{
     try {
 
@@ -66,17 +65,16 @@ export class usuariosModel {
 
     static actualizarUsuario = async ({nombre,password,email,rol_id},id) =>{
         try {
-            const [rows] = await connection.query
-            (`UPDATE usuarios SET nombre = ?, password = ?,email = ?,  rol_id = ? WHERE usuario_id = UUID_TO_BIN(?) `
-                ,[nombre,password,email,rol_id,id])
+            const query = `UPDATE usuarios SET nombre = ?, password = ?,email = ?,  rol_id = ? WHERE usuario_id = UUID_TO_BIN(?) `;
+            const [rows] = await connection.query(query,[nombre,password,email,rol_id,id])
 
                 
              if (rows.affectedRows === 0){
                 throw new Error ('no se actualizo el usuario de la DB');
              }   
 
-             const [result] = await connection.query
-             ('SELECT BIN_TO_UUID(usuario_id) AS  user_id, email,password,rol_id FROM usuarios WHERE usuario_id = UUID_TO_BIN(?)',[id]);
+             const query2 = 'SELECT BIN_TO_UUID(usuario_id) AS  user_id, email,password,rol_id FROM usuarios WHERE usuario_id = UUID_TO_BIN(?)';
+             const [result] = await connection.query(query2,[id]);
 
              return result;
         } catch (error) {

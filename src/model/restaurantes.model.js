@@ -41,7 +41,7 @@ export class restauranteModel {
     static actualizarRestaurante = async ({nombre,direccion},id) =>{
         try {
             const query =`UPDATE usuarios SET nombre = ?, direccion = ? WHERE restaurante_id = UUID_TO_BIN(?)` ;
-            const [rows] = await connection.query(query2,[nombre,direccion])
+            const [rows] = await connection.query(query,[nombre,direccion])
 
                 
              if (rows.affectedRows === 0){
