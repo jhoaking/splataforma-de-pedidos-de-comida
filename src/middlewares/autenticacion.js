@@ -7,15 +7,15 @@ export const autenticar = async (req,res,next) =>{
         const token = req.cookies.access_token;
 
         if(!token){
-            res.status(400).json({message: 'token invalido'})
+            return res.status(400).json({message: 'token invalido'})
         }
     
         const decoded =  jwt.verify(token,SECRET_JWT_KEY);
-        console.log('Usuario decodificado token:', decoded);
+
         req.user = decoded;  
-        next(); 
+
+        next();  
     } catch (error) {
-        console.log('token expirado'); 
-            
+        return res.status(401).json({ message: 'Token expirado o inválido' });  
     }
 }

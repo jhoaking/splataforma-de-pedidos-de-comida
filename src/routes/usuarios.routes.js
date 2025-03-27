@@ -14,5 +14,5 @@ export const crearUser = ({usuariosModel}) =>{
     routerUser.post('/login',userController.loginUser);
     routerUser.put('/:id',userController.updateUser);
 
-    return routerUser;
-}
+    return routerUser; 
+} 

@@ -32,8 +32,8 @@ export class menuController {
         }
     
     
-        deletePedido = async (req,res) =>{
-            const {id} = req.params;
+    deletePedido = async (req,res) =>{
+        const {id} = req.params;
             try {
                 const result = await this.pedidoModel.eliminarPedidos(id)
     
@@ -44,8 +44,8 @@ export class menuController {
         }
     
     
-        updatePedido = async (req,res) =>{
-            const {id} = req.params;
+    updatePedido = async (req,res) =>{
+        const {id} = req.params;
             try {
                 const vali = validarMenu(req.body);
                 if(!vali.success){

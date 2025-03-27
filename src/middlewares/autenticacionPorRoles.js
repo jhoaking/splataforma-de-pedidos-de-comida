@@ -5,14 +5,11 @@ export const validarRoles = (rolesPermitidos) => {
         if (!req.user) {
             return res.status(403).json({ message: 'Acceso denegado, no autenticado' });
         }
-
-        console.log("Usuario decodificado:", req.user); 
-
         
         if (!rolesPermitidos.includes(req.user.rol)) {
             return res.status(403).json({ message: 'Acceso denegado' });
         }
-
+ 
         next();     
     };
 };

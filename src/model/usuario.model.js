@@ -60,8 +60,8 @@ export class usuariosModel {
     } catch (error) {
         console.error("Error al logear el usuario en la base de datos:", error);
         throw error;
-    }
-
+    } 
+ 
     }
 
     static actualizarUsuario = async ({nombre,password,email,rol_id},id) =>{
