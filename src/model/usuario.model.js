@@ -12,7 +12,8 @@ export class usuariosModel {
 
             const hashedPassword = await bcrypt.hash(password,Number(SALT_ROUNDS));
 
-            const [newUser] = await connection.query('INSERT INTO usuarios(nombre,email,password,rol_id) VALUES (?,?,?,?)',[nombre,email,hashedPassword,rol_id]);
+            const query = 'INSERT INTO usuarios(nombre,email,password,rol_id) VALUES (?,?,?,?)';
+            const [newUser] = await connection.query(query,[nombre,email,hashedPassword,rol_id]);
 
             return newUser;
 
@@ -25,9 +26,8 @@ export class usuariosModel {
 
     static buscarPorEmail = async (email) =>{
         try {
-
-            const [result] = await connection.query
-            ('SELECT BIN_TO_UUID(usuario_id) AS usuario_id, nombre, email, password , rol_id FROM usuarios WHERE email = ?',[email])
+            const query = 'SELECT BIN_TO_UUID(usuario_id) AS usuario_id, nombre, email, password , rol_id FROM usuarios WHERE email = ?';
+            const [result] = await connection.query(query,[email])
 
             return result[0];
         } catch (error) {

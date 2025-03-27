@@ -4,8 +4,9 @@ import {connection} from '../db.js';
 export class pedidoModel{
     static obtenerPedido = async () =>{
         try {
-            const [result] = await connection.query
-            ('SELECT BIN_TO_UUID(pedido_id) AS pedido, BIN_TO_UUID(usuario_id) AS usuario,estado_id,fecha_pedido FROM pedidos')
+
+            const query = 'SELECT BIN_TO_UUID(pedido_id) AS pedido, BIN_TO_UUID(usuario_id) AS usuario,estado_id,fecha_pedido FROM pedidos';
+            const [result] = await connection.query(query)
 
             return result;
         } catch (error) {
@@ -16,8 +17,9 @@ export class pedidoModel{
 
     static crearPedidos = async ({estado_id,usuario_id,fecha_pedido}) =>{
         try {
-            const [rows] = await connection.query
-            ('INSERT INTO pedidos(estado_id,usuario_id,fecha_pedido) VALUES(?,UUID_TO_BIN(?),?)',[estado_id,usuario_id,fecha_pedido])
+
+            const query = 'SELECT BIN_TO_UUID(pedido_id) AS pedido, BIN_TO_UUID(usuario_id) AS usuario,estado_id,fecha_pedido FROM pedidos';
+            const [rows] = await connection.query(query,[estado_id,usuario_id,fecha_pedido])
 
             return rows; 
         } catch (error) {
@@ -28,7 +30,8 @@ export class pedidoModel{
 
     static eliminarPedidos = async (id) =>{
         try {
-            const [result] = await connection.query('DELETE FROM pedidos WHERE pedido_id = UUID_TO_BIN(?)',[id]);
+            const query = 'DELETE FROM pedidos WHERE pedido_id = UUID_TO_BIN(?)';
+            const [result] = await connection.query(query,[id]);
 
             if(result.affectedRows === 0){
                 throw new Error ('no se elimino el pedido de la DB');
@@ -43,15 +46,15 @@ export class pedidoModel{
 
     static actualizarPedido = async ({estado_id,fecha_pedido},id) =>{
         try {
-            const [rows] = await connection.query
-            ('UPDATE pedidos SET estado_id = ? , fecha_pedido = ? WHERE pedido_id = UUID_TO_BIN(?)',[estado_id,fecha_pedido]);
+            const query = 'UPDATE pedidos SET estado_id = ? , fecha_pedido = ? WHERE pedido_id = UUID_TO_BIN(?)';
+            const [rows] = await connection.query(query,[estado_id,fecha_pedido]);
 
             if(rows.affectedRows === 0){
                 throw new Error ('no se actualizo el pedido de la DB');
             }
 
-            const [result] = await connection.query
-            ('SELECT BIN_TO_UUID(pedido_id) AS pedido_id, estado_id,fecha_pedido FROM pedidos WHERE pedido_id = UUID_TO_BIN(?)',[id]);
+            const query2 ='SELECT BIN_TO_UUID(pedido_id) AS pedido_id, estado_id,fecha_pedido FROM pedidos WHERE pedido_id = UUID_TO_BIN(?)' ;
+            const [result] = await connection.query(query2,[id]);
 
             return result[0];
         } catch (error) {
