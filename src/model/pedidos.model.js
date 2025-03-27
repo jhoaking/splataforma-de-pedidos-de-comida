@@ -5,7 +5,7 @@ export class pedidoModel{
     static obtenerPedido = async () =>{
         try {
             const [result] = await connection.query
-            ('SELECT BIN_TO_UUID(pedido_id) AS pedido_id, estado_id,frcha_pedido FROM pedidos')
+            ('SELECT BIN_TO_UUID(pedido_id) AS pedido, BIN_TO_UUID(usuario_id) AS usuario,estado_id,fecha_pedido FROM pedidos')
 
             return result;
         } catch (error) {
@@ -17,9 +17,9 @@ export class pedidoModel{
     static crearPedidos = async ({estado_id,usuario_id,fecha_pedido}) =>{
         try {
             const [rows] = await connection.query
-            ('INSERT INTO pedidos(estado_id,usuario_id,fecha_pedido) VALUES(?,UUID_TO_BIN(?),?)'[estado_id,usuario_id,fecha_pedido])
+            ('INSERT INTO pedidos(estado_id,usuario_id,fecha_pedido) VALUES(?,UUID_TO_BIN(?),?)',[estado_id,usuario_id,fecha_pedido])
 
-            return rows;
+            return rows; 
         } catch (error) {
             console.error("Error al crear los datos de la base de datos:", error);
             throw error

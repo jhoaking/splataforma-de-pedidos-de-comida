@@ -10,11 +10,12 @@ export const autenticar = async (req,res,next) =>{
             res.status(400).json({message: 'token invalido'})
         }
     
-        const decoded = await jwt.verify(token,SECRET_JWT_KEY);
-        req.user = decoded;
+        const decoded =  jwt.verify(token,SECRET_JWT_KEY);
+        console.log('Usuario decodificado token:', decoded);
+        req.user = decoded;  
         next(); 
     } catch (error) {
-        console.log('token expirado');
-        
+        console.log('token expirado'); 
+            
     }
 }

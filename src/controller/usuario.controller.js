@@ -60,7 +60,7 @@ export class controllerUser{
                 res.status(200).json({
                     message: "Ruta protegida accedida con éxito",
                     user: req.user
-                });
+                }); 
             } catch (error) {
                 console.error('error en la ruta protegida');
                 

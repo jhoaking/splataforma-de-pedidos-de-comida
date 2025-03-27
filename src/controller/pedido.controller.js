@@ -1,4 +1,4 @@
-import { validarMenu } from "../schema/validacionmenus.js";
+import { validarPedido } from "../schema/validacionPedidos.js";
 
 
 export class menuController {
@@ -17,13 +17,12 @@ export class menuController {
     }
 
     createPedido = async (req,res) =>{
-    
             try {
-                const vali = validarMenu(req.body);
+                const vali = validarPedido(req.body);
                 if(!vali.success){
                     res.status(400).json({error: JSON.parse(vali.error.message)});
                 }
-    
+                
                 const result = await this.pedidoModel.crearPedidos(vali.data);
     
                 res.status(200).json({message : 'se creo el pedido',result});
@@ -60,4 +59,4 @@ export class menuController {
                 res.status(500).json({message : 'error al actualizar los datos del pedido', error: error.message});
             }
         }
-} 
+}  
