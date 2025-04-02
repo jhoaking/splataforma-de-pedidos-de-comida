@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { menuController } from "../controller/pedido.controller.js";
-import { validarRoles,verificarPedido } from "../middlewares/autenticacionPorRoles.js";
+import { validarRoles} from "../middlewares/autenticacionPorRoles.js";
 import {autenticar} from '../middlewares/autenticacion.js'
 
 export const crearPedido = ({pedidoModel}) =>{

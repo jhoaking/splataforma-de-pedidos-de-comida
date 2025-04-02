@@ -1,4 +1,3 @@
-import { connection } from "../db.js";
 
 export const validarRoles = (rolesPermitidos) => {
     return (req, res, next) => {
